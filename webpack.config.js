@@ -1,18 +1,20 @@
 const path = require("path");
 const miniCssExtractPlugins = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
         main: "./static/js/entry.js"
     },
     output: {
-        filename: "[name].bunddle.js",
+        filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "buddled")
     },
-    plugins:[
-new miniCssExtractPlugins({
-    filename: "[name]-bundle.css"
-})
+    plugins: [
+        new miniCssExtractPlugins({
+            filename: "[name]-[contenthash].css"
+        }),
+        new CleanWebpackPlugin()
     ],
     module: {
         rules: [{
@@ -20,7 +22,7 @@ new miniCssExtractPlugins({
                 use: {
                     loader: "file-loader",
                     options: {
-                        name: "[name]-buddled.[ext]",
+                        name: "[name].[contenthash].[ext]",
                         outputPath: "buddle-imgs"
                     }
                 }
