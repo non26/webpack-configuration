@@ -1,13 +1,13 @@
 const path = require("path");
-const miniCssExtractPlugins = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const miniCssExtractPlugins = require("mini-css-extract-plugin"); // extract css into its own file
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // remove unused bundled file
 
 module.exports = {
     entry: {
         main: "./static/js/entry.js"
     },
     output: {
-        filename: "[name].[contenthash].js",
+        filename: "[name].[contenthash].js", // hash for preventing default browser caching.
         path: path.resolve(__dirname, "buddled")
     },
     plugins: [
