@@ -1,4 +1,5 @@
 const path = require("path");
+const miniCssExtractPlugins = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
@@ -8,12 +9,17 @@ module.exports = {
         filename: "[name].bunddle.js",
         path: path.resolve(__dirname, "buddled")
     },
+    plugins:[
+new miniCssExtractPlugins({
+    filename: "[name]-bundle.css"
+})
+    ],
     module: {
         rules: [{
                 test: /\.(svg|jpg)$/,
                 use: {
                     loader: "file-loader",
-                    option: {
+                    options: {
                         name: "[name]-buddled.[ext]",
                         outputPath: "buddle-imgs"
                     }
@@ -22,9 +28,9 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader"
+                    miniCssExtractPlugins.loader, // extract css into files
+                    "css-loader", // turn css into commonJS
+                    "sass-loader" // turn sass to css
                 ]
             }
         ]
