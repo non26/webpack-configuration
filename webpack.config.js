@@ -1,6 +1,7 @@
 const path = require("path");
 const miniCssExtractPlugins = require("mini-css-extract-plugin"); // extract css into its own file
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // remove unused bundled file
+const htmlWebpackPlugins = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -14,7 +15,10 @@ module.exports = {
         new miniCssExtractPlugins({
             filename: "[name]-[contenthash].css"
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new htmlWebpackPlugins({
+            template: "./src/index.html"
+        })
     ],
     module: {
         rules: [{
