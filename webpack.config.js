@@ -5,11 +5,12 @@ const htmlWebpackPlugins = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: "./static/js/entry.js"
+        main: "./src/js/entry.js"
     },
     output: {
         filename: "[name].[contenthash].js", // hash for preventing default browser caching.
-        path: path.resolve(__dirname, "buddled")
+        path: path.resolve(__dirname, "buddled"),
+        assetModuleFilename: "assets/img/[name].[hash][ext]"
     },
     plugins: [
         new miniCssExtractPlugins({
@@ -21,15 +22,10 @@ module.exports = {
         })
     ],
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.(svg|jpg)$/,
-                use: {
-                    loader: "file-loader",
-                    options: {
-                        name: "[name].[contenthash].[ext]",
-                        outputPath: "buddle-imgs"
-                    }
-                }
+                type: 'asset/resource'
             },
             {
                 test: /\.scss$/,
@@ -37,6 +33,12 @@ module.exports = {
                     miniCssExtractPlugins.loader, // extract css into files
                     "css-loader", // turn css into commonJS
                     "sass-loader" // turn sass to css
+                ]
+            },
+            {
+                test: /\.html$/,
+                use:[
+                    "html-loader"
                 ]
             }
         ]
